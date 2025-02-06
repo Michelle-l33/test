@@ -24,7 +24,7 @@ const HomePage = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8081/api/users/register", {
+      const response = await fetch("http://localhost:8082/user/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
