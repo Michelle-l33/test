@@ -17,7 +17,7 @@ connectDB();
 
 // Example API route
 app.get("/", (req, res) => {
-  res.send("Backend is running yay!");
+  res.send("Backend is running yayy!");
 });
 
 //Routes
