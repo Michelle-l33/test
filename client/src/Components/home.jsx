@@ -1,113 +1,101 @@
-import React, { useState } from "react";
+import NavBar from './NavBar/NavBar';
+import DropDownBar from './DropDownBar/DropDownBar'
+import Gallery from './Gallery/Gallery'
+import SearchBar from './SearchBar'
+import FAQ from './FAQ/FAQ'
+import Footer from './Footer/Footer'
 
-const HomePage = () => {
-  // State to manage form data
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isAuthor, setIsAuthor] = useState(false);
-  const [isEditor, setIsEditor] = useState(false);
-  const [isReviewer, setIsReviewer] = useState(false);
 
-  // State to handle success or error messages
-  const [message, setMessage] = useState("");
+import beidou from '../Asset/beidou.webp';
+import clorinde from '../Asset/clorinde.webp';
+import navia from '../Asset/navia.webp';
+import ningguang from '../Asset/ningguang.webp';
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+        
+const listOfPictureInfos = [
+    
+    {
+        title: "Beidou",
+        author: "It's me, Beidou!",
+        description: "Beidou: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        url: beidou
+    },
 
-    const userData = {
-      email,
-      password,
-      isAuthor,
-      isEditor,
-      isReviewer,
-    };
+    {
+        title: "Clorinde",
+        author: "It's me, Clorinde!",
+        description: "Clorinde: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        url: clorinde
+    },
 
-    try {
-      const response = await fetch("http://localhost:8082/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+    {
+        title: "Navia",
+        author: "It's me, Navia!",
+        description: "Navia: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        url: navia
+    },
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage("User registered successfully!");
-      } else {
-        setMessage(data.error || "Something went wrong!");
-      }
-    } catch (error) {
-      setMessage("Error: " + error.message);
+    {
+        title: "Ningguang",
+        author: "It's me, Ningguang!",
+        description: "Ningguang: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        url: ningguang
     }
-  };
+]
 
-  return (
-    <div>
-      <h2>Test User Registration</h2>
 
-      <form onSubmit={handleSubmit}>
+
+const dropDownList = [
+    {
+        label: "Overall",
+        listOfDropDown: [
+
+        { label: "Option 1", url: "/option1" },
+        { label: "Option 2", url: "/option2" }
+
+        ]
+    },
+
+    {
+        label: "Gallery",
+        listOfDropDown: [
+
+        { label: "Option 1", url: "/option1" },
+        { label: "Option 2", url: "/option2" }
+        
+        ]
+    },
+
+    {
+        label: "Document",
+        listOfDropDown: [
+
+            { label: "Option 1", url: "/option1" },
+            { label: "Option 2", url: "/option2" }
+            
+            ]
+    }, 
+]
+
+
+
+const homePage =() => {
+    //javascript funcs go here
+    return( // html goes in the return()   
         <div>
-          <label>Email: </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+            <header>
+                <NavBar isLoggedIn = {false}/>
+                <DropDownBar dropDownList = {dropDownList}/>
+            </header>
+
+            <main>
+                <FAQ />
+                <SearchBar />
+                <Gallery listOfPictureInfos = {listOfPictureInfos}/> 
+                <Footer />
+            </main>
         </div>
-
-        <div>
-          <label>Password: </label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <label>
-            <input
-              type="radio"
-              checked={isAuthor}
-              onChange={() => setIsAuthor(!isAuthor)}
-            />
-            Is Author
-          </label>
-        </div>
-
-        <div>
-          <label>
-            <input
-              type="radio"
-              checked={isEditor}
-              onChange={() => setIsEditor(!isEditor)}
-            />
-            Is Editor
-          </label>
-        </div>
-
-        <div>
-          <label>
-            <input
-              type="radio"
-              checked={isReviewer}
-              onChange={() => setIsReviewer(!isReviewer)}
-            />
-            Is Reviewer
-          </label>
-        </div>
-
-        <button type="submit">Register</button>
-      </form>
-
-      <div>{message && <p>{message}</p>}</div>
-    </div>
-  );
+        
+    );
 };
-
-export default HomePage;
+export default homePage; //make sure to export the constant
